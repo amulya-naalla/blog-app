@@ -1,0 +1,79 @@
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --royal-blue: #002349;
+  --blue: #96C2DB;
+  --grey: #E5EDF1;
+  --white: #FFFFFF;
+  --cream: #FFFDF2;
+  --white-smoke: #F0F0F0;
+  --bright-red: #E7473C;
+}
+
+body {
+  background-color: var(--white-smoke);
+}
+
+.header {
+    margin-bottom: 50px;
+    background-image: linear-gradient(to bottom, #aba5a5, #bcb7b8, #cccacb, #deddde, #f0f0f0);
+}
+
+.header a{
+  text-decoration: none;
+  color: white;
+}
+
+.header-links{
+  width: 250px;
+}
+
+.role {
+    max-width: 700px;
+}
+
+.role-radio {
+    background-color: #d5cabd;
+    font-size: 1.2rem;
+    border-radius: 10px;
+}
+
+.user-button {
+    text-align: left;
+}
+
+.signout-btn {
+    border: none;
+    margin-left: 10px;
+    /* color: #FFEECC; */
+    color: rgb(217, 83, 0);
+    background-color: transparent;
+    height: 30px;
+    padding: 2px;
+    font-size: 1rem;
+    border-radius: 5px;
+    font-weight: 400;
+    font-family: "oswald", sans-serif;
+    border: 1px solid rgb(217, 83, 0);
+}
+
+.user-button .role {
+    color: var(--cream);
+    background-color: goldenrod;
+
+    font-weight: 300;
+    font-family: "Inter", sans-serif;
+    padding: 1px;
+    font-size: 0.7rem;
+    border-radius: 7px;
+
+}
+
+.user-button .user-name {
+    color: var(--royal-blue);
+    font-size: 1.2rem;
+}
