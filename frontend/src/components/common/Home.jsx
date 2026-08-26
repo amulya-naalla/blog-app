@@ -12,7 +12,7 @@ function Home() {
       firstName:user?.firstName,
       lastName:user?.lastName,
       email:user?.emailAddresses[0].emailAddress,
-      profileImgUrl:user?.imageUrl
+      profileUrl:user?.imageUrl
     })
    },[isLoaded])
 
@@ -28,7 +28,7 @@ function Home() {
       }
     }
     if(selectedRole=="user"){
-      res=await axios.post('http://localhost:3000/user-api/author',currentUser)
+      res=await axios.post('http://localhost:3000/user-api/user',currentUser)
       let {message,payload}=res.data
       if(message=="user"){
         setCurrentUser({...currentUser,...payload})

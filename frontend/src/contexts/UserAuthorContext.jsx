@@ -7,7 +7,7 @@ function UserAuthorContext({children}) {
     firstName:'',
     lastName:'',
     email:'',
-    profileImgUrl:'',
+    profileUrl:'',
     role:''
   })
 
