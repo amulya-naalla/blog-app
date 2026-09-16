@@ -63,7 +63,7 @@ const browserRouterObj=createBrowserRouter([
             element:<ArticleByID/>
           },
           {
-            path:":article",
+            path:"article",
             element:<PostArtcile/>
           },
           {

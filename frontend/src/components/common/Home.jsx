@@ -1,11 +1,15 @@
-import { useContext,useEffect  } from "react"
+import { useContext,useEffect,useState } from "react"
 import { userAuthorContextObj } from "../../contexts/UserAuthorContext"
 import { useUser } from "@clerk/react"
 import  axios from "axios"
+import {useNavigate} from 'react-router-dom'
 
 function Home() {
   const {currentUser,setCurrentUser}=useContext(userAuthorContextObj)
   const {isSignedIn,user,isLoaded}=useUser()
+  const [error,setError]=useState("")
+  const navigate=useNavigate()
+
   useEffect(()=>{
     setCurrentUser({
       ...currentUser,
@@ -16,7 +20,17 @@ function Home() {
     })
    },[isLoaded])
 
+   useEffect(()=>{
+    if(currentUser?.role=="user" && error.length==0){
+      navigate(`/user-profile/${currentUser.email}`)
+    }
+    if(currentUser?.role=="author" && error.length==0){
+      navigate(`/author-profile/${currentUser.email}`)
+    }
+   },[currentUser])
+
   async function onSelectRole(e){
+    setError('')
     const selectedRole=e.target.value 
     currentUser.role=selectedRole
     let res=null 
@@ -25,6 +39,8 @@ function Home() {
       let {message,payload}=res.data
       if(message=="author"){
         setCurrentUser({...currentUser,...payload})
+      }else{
+        setError(message)
       }
     }
     if(selectedRole=="user"){
@@ -32,6 +48,8 @@ function Home() {
       let {message,payload}=res.data
       if(message=="user"){
         setCurrentUser({...currentUser,...payload})
+      }else{
+        setError(message)
       }
     }
   }
@@ -53,6 +71,9 @@ function Home() {
           <p className="display-6">{user.firstName}</p>
         </div>
         <p className="lead">Select role</p> 
+        {error.length!==0 && (
+          <p className="text-danger">{error}</p>
+        )}
         <div className="d-flex role-radio py-3 justify-content-center">
         
             <div className="form-check me-4">

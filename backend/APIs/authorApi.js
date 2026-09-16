@@ -3,6 +3,13 @@ const authorApp=exp.Router()
 const expressAsyncHandler=require('express-async-handler')
 const createUserOrAuthor=require('./createUserOrAuthor')
 const Article=require('../models/articleModel')
+const {requireAuth,clerkMiddleware}=require('@clerk/express')
+
+require('dotenv').config()
+
+authorApp.get('/unauthorized',(req,res)=>{
+    res.send({message:"Unauthorized request."})
+})
 
 authorApp.post("/author",expressAsyncHandler(createUserOrAuthor))
 
@@ -13,12 +20,12 @@ authorApp.post("/article",expressAsyncHandler(async(req,res)=>{
     res.status(201).send({message:"article created",payload:artDoc})
 }))
 
-authorApp.get("/articles",expressAsyncHandler(async(req,res)=>{
+authorApp.get("/articles",requireAuth({signInUrl:"unauthorized"}),expressAsyncHandler(async(req,res)=>{
     const artList=await Article.find({isArticleActive:true})
     res.status(200).send({message:"articles",payload:artList})
 }))
 
-authorApp.put("/article/:articleId",expressAsyncHandler(async(req,res)=>{
+authorApp.put("/article/:articleId",requireAuth({signInUrl:"unauthorized"}),expressAsyncHandler(async(req,res)=>{
     const modifiedArt=req.body
     const dbRes=await Article.findByIdAndUpdate(modifiedArt._id,{...modifiedArt},{returnDocument:'after'})
     res.status(200).send({message:"article modified",payload:dbRes})
@@ -27,7 +34,7 @@ authorApp.put("/article/:articleId",expressAsyncHandler(async(req,res)=>{
 authorApp.put("/articles/:articleId",expressAsyncHandler(async(req,res)=>{
     const deletedArt=req.body
     const dbRes=await Article.findByIdAndUpdate(deletedArt._id,{...deletedArt},{returnDocument:'after'})
-    res.status(200).send({message:"article deleted",payload:dbRes})
+    res.status(200).send({message:"article deleted or restored",payload:dbRes})
 }))
 
 module.exports=authorApp
