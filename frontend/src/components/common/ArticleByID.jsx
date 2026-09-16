@@ -11,7 +11,7 @@ import { useAuth } from '@clerk/react'
 
 //hi this is ammu
 //hi this is me
-//hi this is pratiksha
+//hi this is pratiksha reddy
 
 function ArticleByID() {
 
